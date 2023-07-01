@@ -1,5 +1,4 @@
 import 'package:chopper/chopper.dart';
-import 'package:chopper_lessons/data/generic_converter.dart';
 
 // Source code generation in Dart works by creating a new file which contains a "companion class".
 // In order for the source gen to know which file to generate and which files are "linked", you need to use the part keyword.
@@ -24,7 +23,7 @@ abstract class PhotosApiService extends ChopperService {
         _$PhotosApiService(),
       ],
       // Converts data to & from JSON and adds the application/json header.
-      converter: CustomJsonConverter(),
+      converter: const JsonConverter(),
     );
 
     // The generated class with the ChopperClient passed in
