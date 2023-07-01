@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:chopper/chopper.dart';
+import 'package:chopper_lessons/data/models/posts/post_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'data/post_api_service.dart';
+import '../../data/services/posts/post_api_service.dart';
 
 class SinglePostPage extends StatelessWidget {
   final int postId;
@@ -15,13 +15,13 @@ class SinglePostPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chopper Blog'),
+        title: const Text('Retrofit'),
       ),
-      body: FutureBuilder<Response>(
+      body: FutureBuilder<PostModel>(
         future: Provider.of<PostApiService>(context).getPost(postId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            final Map post = json.decode(snapshot.data?.bodyString ?? "");
+            final post = snapshot.data!;
             return _buildPost(post);
           } else {
             return const Center(
@@ -33,20 +33,20 @@ class SinglePostPage extends StatelessWidget {
     );
   }
 
-  Padding _buildPost(Map post) {
+  Padding _buildPost(PostModel post) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: <Widget>[
           Text(
-            post['title'],
+            post.title,
             style: const TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 8),
-          Text(post['body']),
+          Text(post.body),
         ],
       ),
     );

@@ -1,12 +1,11 @@
 import 'dart:convert';
-
-import 'package:chopper/chopper.dart';
-import 'package:chopper_lessons/single_photo_page.dart';
+import 'package:chopper_lessons/presentation/photos/single_photo_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-import 'data/photos_api_service.dart';
+import '../../data/models/photos/photo_model.dart';
+import '../../data/services/photos/photos_api_service.dart';
 
 class PhotosPage extends StatelessWidget {
   const PhotosPage({super.key});
@@ -15,15 +14,15 @@ class PhotosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Chopper Blog'),
+          title: const Text('Retrofit'),
         ),
         body: _buildBody(context));
   }
 
-  FutureBuilder<Response> _buildBody(BuildContext context) {
+  FutureBuilder<List<PhotoModel>> _buildBody(BuildContext context) {
     // FutureBuilder is perfect for easily building UI when awaiting a Future
     // Response is the type currently returned by all the methods of PostApiService
-    return FutureBuilder<Response>(
+    return FutureBuilder<List<PhotoModel>>(
       // In real apps, use some sort of state management (BLoC is cool)
       // to prevent duplicate requests when the UI rebuilds
       future: Provider.of<PhotosApiService>(context).getPhotos(),
@@ -31,7 +30,7 @@ class PhotosPage extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           // Snapshot's data is the Response
           // You can see there's no type safety here (only List<dynamic>)
-          final List posts = json.decode(snapshot.data!.bodyString);
+          final List<PhotoModel> posts = snapshot.data!;
           return _buildPosts(context, posts);
         } else {
           // Show a loading indicator while waiting for the posts
@@ -43,21 +42,21 @@ class PhotosPage extends StatelessWidget {
     );
   }
 
-  ListView _buildPosts(BuildContext context, List photos) {
+  ListView _buildPosts(BuildContext context, List<PhotoModel> photos) {
     return ListView.builder(
       itemCount: photos.length,
       padding: const EdgeInsets.all(8),
       itemBuilder: (context, index) {
+        var photo = photos[index];
         return Card(
           elevation: 4,
           child: ListTile(
-            leading:
-                ImageWidget(imageUrl: photos[index]['thumbnailUrl'] as String),
+            leading: ImageWidget(imageUrl: photo.thumbnailUrl),
             title: Text(
-              photos[index]['title'],
+              photo.title,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            onTap: () => _navigateToPhotoPage(context, photos[index]['id']),
+            onTap: () => _navigateToPhotoPage(context, photo.id),
           ),
         );
       },
