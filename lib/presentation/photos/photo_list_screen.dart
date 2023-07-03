@@ -8,6 +8,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../controllers/photo_state_notifier.dart';
 
 class PhotoListScreen extends HookConsumerWidget {
+  const PhotoListScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final photosState = ref.watch(photoStateNotifierProvider);

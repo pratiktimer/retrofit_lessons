@@ -1,3 +1,4 @@
+import 'package:chopper_lessons/presentation/users/user_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -22,7 +23,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: 'Material App',
         home: ScaffoldWithNavigationBar(
-          body: PhotoListScreen(),
+          body: ShowPage(),
           selectedIndex: index,
           onDestinationSelected: (value) => UpdatePage(value),
         ),
@@ -34,6 +35,19 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       index = value;
     });
+  }
+
+  ShowPage() {
+    switch (index) {
+      case 0:
+        return const UserListScreen();
+      case 1:
+        return const PhotoListScreen();
+      case 2:
+        return const UserListScreen();
+      case 3:
+        return const PhotoListScreen();
+    }
   }
 }
 

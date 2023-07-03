@@ -1,4 +1,4 @@
-package com.prateektimer.chopper.chopper_lessons
+package com.prateektimer.jsonplaceholder_clean_code
 
 import io.flutter.embedding.android.FlutterActivity
 
