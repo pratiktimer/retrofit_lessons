@@ -1,3 +1,5 @@
+import 'package:chopper_lessons/presentation/albums/album_list_page.dart';
+import 'package:chopper_lessons/presentation/post/post_list_screen.dart';
 import 'package:chopper_lessons/presentation/users/user_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -42,11 +44,11 @@ class _MyAppState extends State<MyApp> {
       case 0:
         return const UserListScreen();
       case 1:
-        return const PhotoListScreen();
+        return const AlbumListScreen();
       case 2:
-        return const UserListScreen();
-      case 3:
         return const PhotoListScreen();
+      case 3:
+        return const PostListScreen();
     }
   }
 }
